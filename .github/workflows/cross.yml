@@ -23,9 +23,9 @@ jobs:
         run: |
           echo "foo=${{matrix.foo}}" >> $GITHUB_OUTPUT
           if [ -z "${{matrix.bar}}" ]; then
-            echo "bar=${{matrix.bar}}" >> $GITHUB_OUTPUT
-          else
             echo "bar=${{matrix.foo}}" >> $GITHUB_OUTPUT
+          else
+            echo "bar=${{matrix.bar}}" >> $GITHUB_OUTPUT
           fi
 
       - name: print foo
