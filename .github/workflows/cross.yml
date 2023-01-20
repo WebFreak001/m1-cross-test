@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install D compiler
-        uses: |
+        run: |
           wget https://github.com/ldc-developers/ldc/releases/download/v1.30.0/ldc2-1.30.0-osx-universal.tar.xz
           tar xvf ldc2-1.30.0-osx-universal.tar.xz
 
