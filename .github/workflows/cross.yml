@@ -9,8 +9,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [macOS-latest]
-        foo: bar
-        bar: baz
+        foo: [bar]
+        bar: [baz]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
