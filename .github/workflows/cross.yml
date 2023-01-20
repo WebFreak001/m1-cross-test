@@ -9,6 +9,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [macOS-latest]
+        foo: bar
+        bar: baz
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +19,15 @@ jobs:
         run: |
           wget https://github.com/ldc-developers/ldc/releases/download/v1.30.0/ldc2-1.30.0-osx-universal.tar.xz
           tar xvf ldc2-1.30.0-osx-universal.tar.xz
+
+      - name: print foo
+        run: echo ${{ matrix.foo }}
+
+      - name: print bar
+        run: echo ${{ matrix.bar }}
+
+      - name: print baz or foo or bar
+        run: echo ${{ matrix.baz || matrix.bar || matrix.foo }}
 
       - name: Build executable
         run: ./ldc2-1.30.0-osx-universal/bin/dub build --arch=arm64-apple-macos --build=release
