@@ -19,17 +19,23 @@ jobs:
         with:
             compiler: ldc-latest
 
-      - name: set env
+      - id: foo
         run: |
-          export FOO=${{matrix.foo}}
-          export BAR=${{matrix.bar}}
+          echo "${{matrix.foo}}" >> $GITHUB_OUTPUT
 
-          if [ -z "$BAR" ]; then
-            export BAR="$FOO"
+      - id: bar
+        run: |
+          if [ -z "${{matrix.bar}}" ]; then
+            echo "${{matrix.bar}}" >> $GITHUB_OUTPUT
+          else
+            echo "${{matrix.foo}}" >> $GITHUB_OUTPUT
           fi
 
       - name: print foo
-        run: echo $FOO
+        run: echo "${{ steps.foo.outputs.* }}"
+
+      - name: print bar
+        run: echo "${{ steps.foo.outputs.* }}"
 
       - name: print bar
         run: echo $BAR
