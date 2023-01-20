@@ -20,7 +20,7 @@ jobs:
             compiler: ldc-latest
 
       - name: set env
-        run:
+        run: |
           export FOO=${{matrix.foo}}
           export BAR=${{matrix.bar}}
 
