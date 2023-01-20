@@ -19,7 +19,7 @@ jobs:
           tar xvf ldc2-1.30.0-osx-universal.tar.xz
 
       - name: Build executable
-        run: ./ldc2-1.30.0-osx-universal/bin/dub build --arch=aarch64 --build=release
+        run: ./ldc2-1.30.0-osx-universal/bin/dub build --arch=arm64-apple-macos --build=release
 
       - name: Compress executable
         run: tar -cvzf test-aarch64-osx.tar.gz m1-cross-test
