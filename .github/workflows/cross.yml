@@ -10,24 +10,29 @@ jobs:
       matrix:
         os: [macOS-latest]
         foo: [bar]
-        bar: [baz]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Install D compiler
-        run: |
-          wget https://github.com/ldc-developers/ldc/releases/download/v1.30.0/ldc2-1.30.0-osx-universal.tar.xz
-          tar xvf ldc2-1.30.0-osx-universal.tar.xz
+        uses: dlang-community/setup-dlang@v1
+        with:
+            compiler: ldc-latest
+
+      - name: set env
+        run:
+          export FOO=${{matrix.foo}}
+          export BAR=${{matrix.bar}}
+
+          if [ -z "$BAR" ]; then
+            export BAR="$FOO"
+          fi
 
       - name: print foo
-        run: echo ${{ matrix.foo }}
+        run: echo $FOO
 
       - name: print bar
-        run: echo ${{ matrix.bar }}
-
-      - name: print baz or foo or bar
-        run: echo ${{ matrix.baz || matrix.bar || matrix.foo }}
+        run: echo $BAR
 
       - name: Build executable
         run: ./ldc2-1.30.0-osx-universal/bin/dub build --arch=arm64-apple-macos --build=release
