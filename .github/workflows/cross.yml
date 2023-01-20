@@ -1,0 +1,32 @@
+name: Upload prebuild binaries
+on:
+  release:
+    types: [published]
+
+jobs:
+  nightly:
+    name: Deploy releases
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macOS-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install D compiler
+        uses: dlang-community/setup-dlang@v1
+        with:
+            compiler: ldc-latest
+
+      - name: Build executable
+        run: dub build --arch=aarch64 --build=release
+
+      - name: Compress executable
+        run: tar -cvzf test-aarch64-osx.tar.gz m1-cross-test
+
+      - name: Archive artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aarch64-build-osx
+          path: test-aarch64-osx.tar.gz
