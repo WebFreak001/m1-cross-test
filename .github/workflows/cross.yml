@@ -19,23 +19,20 @@ jobs:
         with:
             compiler: ldc-latest
 
-      - id: foo
+      - id: vars
         run: |
-          echo "${{matrix.foo}}" >> $GITHUB_OUTPUT
-
-      - id: bar
-        run: |
+          echo "foo=${{matrix.foo}}" >> $GITHUB_OUTPUT
           if [ -z "${{matrix.bar}}" ]; then
-            echo "${{matrix.bar}}" >> $GITHUB_OUTPUT
+            echo "bar=${{matrix.bar}}" >> $GITHUB_OUTPUT
           else
-            echo "${{matrix.foo}}" >> $GITHUB_OUTPUT
+            echo "bar=${{matrix.foo}}" >> $GITHUB_OUTPUT
           fi
 
       - name: print foo
-        run: echo "${{ steps.foo.outputs.* }}"
+        run: echo "${{ steps.vars.outputs.foo }}"
 
       - name: print bar
-        run: echo "${{ steps.foo.outputs.* }}"
+        run: echo "${{ steps.vars.outputs.bar }}"
 
       - name: print bar
         run: echo $BAR
