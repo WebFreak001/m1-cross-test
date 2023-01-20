@@ -1,7 +1,6 @@
-name: Upload prebuild binaries
+name: Build cross
 on:
-  release:
-    types: [published]
+  push:
 
 jobs:
   nightly:
